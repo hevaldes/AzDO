@@ -1,4 +1,5 @@
 # Entrenamiento Azure DevOps
+___
 
 ## Generales
 
@@ -6,19 +7,27 @@
 2. Una vez creada la infraestructura, se necesitan generar un par de Service Connection en Azure DevOps para conectar con el AKS, el ACR y el portal de Microsoft Azure
 3. Finalmente, se necesita la creación de un Pipeline de Releas para desplegar la aplicación en el AKS
 4. Los pre requsitos son: Suscripción Microsoft Azure, Cuenta Azure DevOps con un proyecto creado (Git)
+5. El repositorio ya tiene la llave .pub agregada, a continuación se describe como generarla. 
+
+```
+ssh-keygen -m PEM -t rsa -b 4096 -C "sntdruser@demopoc" -f aks-terraform-devops-sshkey
+```
+![Image](https://github.com/hevaldes/AzDO/blob/main/assets/ssh.PNG "SSH Key")
+
+___
 
 ## Estructura del Repositorio
 
 Los archivos en el repositorio son los necesarios para iniciar con la prueba de concepto
 
-### Azure Kubernetes Service
+#### Azure Kubernetes Service
 
 | Archivo  | Descripción |
 | ----------------- | ----------------- |
 | [K8s manifest/Kubernetes.yml](https://github.com/hevaldes/AzDO/blob/main/K8s%20manifest/Kubernetes.yml)  | Contiene la descripción del despliegue de la imágen contenerizada. |
 
 
-### Terraform
+#### Terraform
 
 | Archivo  | Descripción |
 | ----------------- | ----------------- |
@@ -28,18 +37,20 @@ Los archivos en el repositorio son los necesarios para iniciar con la prueba de 
 | [Terraform-manifests/outputs.tf](https://github.com/hevaldes/AzDO/blob/main/Terraform-manifests/outputs.tf)  | Salidas generadas Terraform |
 | [Terraform-manifests/variables.tf](https://github.com/hevaldes/AzDO/blob/main/Terraform-manifests/variables.tf)  | Archivo de Variables |
 
-### App .NET Core Demo
+#### App .NET Core Demo
 
 | Folder  | Descripción |
 | ----------------- | ----------------- |
 | [DemoAppNET](https://github.com/hevaldes/AzDO/tree/main/DemoAppNET)  | Aplicación .NET Core con DockerFile para contenerizar |
 
 
-### Pipelines
+#### Pipelines
 
 | Archivo  | Descripción |
 | ----------------- | ----------------- |
 | [PipelineInfra-CI.yml](https://github.com/hevaldes/AzDO/blob/main/PipelineApp-CI.yml)  | Pipeline para contenerización y despliegue de imágen en ACR |
+
+___
 
 ## Orden de implementación de la prueba de concepto
 
