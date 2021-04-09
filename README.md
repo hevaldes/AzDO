@@ -3,18 +3,19 @@ ___
 
 ## Generales
 
-1. El objetivo de la prueba de concepto es crear un Azure Kubernetes Service y un Azure Container Registry con Terraform mediante un pipeline de CI.
-2. Una vez creada la infraestructura, se necesitan generar un par de Service Connection en Azure DevOps para conectar con el AKS, el ACR y el portal de Microsoft Azure
-3. Finalmente, se necesita la creación de un Pipeline de Releas para desplegar la aplicación en el AKS
-4. Los pre requsitos son: Suscripción Microsoft Azure, Cuenta Azure DevOps con un proyecto creado (Git)
-5. El repositorio ya tiene la llave .pub agregada, a continuación se describe como generarla. 
+1. El objetivo de la prueba de concepto es crear un clúster de Azure Kubernetes Service y un Azure Container Registry. Ambos con Terraform mediante un pipeline de CI.
+2. Una vez creada la infraestructura, se necesitan generar un par de Service Connection en Azure DevOps para conectar con el AKS, el ACR y el portal de Microsoft Azure.
+3. Se necesita la creación de un Pipeline de CI para la contenerización de la aplicación .NET de ejemplo y la generación de los artefactos.
+4. Finalmente, un pipeline de Release para desplegar la aplicación en el AKS.
+5. Los pre requsitos son: Suscripción Microsoft Azure, Cuenta Azure DevOps con un proyecto creado (Git).
+6. El repositorio aqui en GitHub ya tiene la llave .pub de seguridad agregada y que se necesita para la creación del clúster de AKS. Sin embargo a continuación se describe como generarla. 
 
 ```
 ssh-keygen -m PEM -t rsa -b 4096 -C "sntdruser@demopoc" -f aks-terraform-devops-sshkey
 ```
 ![Image](https://github.com/hevaldes/AzDO/blob/main/assets/ssh.png "SSH Key")
 
-6. Se necesitará agregar del [Marketplace](https://marketplace.visualstudio.com/azuredevops?utm_source=vstsproduct&utm_medium=L1BrowseMarketplace&targetId=8bc5a556-3b10-4268-8754-c1fc189ef7b4) la extensión de [Terraform - Microsoft DevLabss](https://marketplace.visualstudio.com/azuredevops?utm_source=vstsproduct&utm_medium=L1BrowseMarketplace&targetId=8bc5a556-3b10-4268-8754-c1fc189ef7b4)
+7. Se necesitará agregar del [Marketplace](https://marketplace.visualstudio.com/azuredevops?utm_source=vstsproduct&utm_medium=L1BrowseMarketplace&targetId=8bc5a556-3b10-4268-8754-c1fc189ef7b4) la extensión de [Terraform - Microsoft DevLabss](https://marketplace.visualstudio.com/azuredevops?utm_source=vstsproduct&utm_medium=L1BrowseMarketplace&targetId=8bc5a556-3b10-4268-8754-c1fc189ef7b4)
 
 ![Image](https://github.com/hevaldes/AzDO/blob/main/assets/TerraformExtension.PNG "Terraform Microsoft Extension")
 ___
@@ -164,8 +165,10 @@ Creacíó del Pipeline:
 
 En esta tarea, asignar correctamente la propiedad Container, donde respecto a la imágen: [ACR_URL]/[namespace]/demoappnet:$(Build.BuildId)
 
+```
 ACR_URL: Url del Azure Container Registry. Ej: miregistry.azurecr.io
 namespace: Se refiere al asignado en la sección "5. Creación Pileline de CI" punto "#4"
+```
 
 8. Ejecutar
 
