@@ -54,13 +54,13 @@ ___
 
 ## Orden de implementación de la prueba de concepto
 
-#### Configuraciones en Azure DevOps
+#### 1. Configuraciones en Azure DevOps
 
 1. Tener acceso a una suscripción Microsoft Azure para la creación de los recursos
 2. Tener una cuenta Azure DevOps con un proyecto creado. Agile/Git
 3. Contar con el todo el repositorio restaurado en Azure Repositories dentro de Azure DevOps o bien en GitHub conectado a Azure Pipelines
 
-#### Creación de Service Connection para Microsoft Azure
+#### 2. Creación de Service Connection para Microsoft Azure
 
 Esta conexión será utilizada por el pipeline llamado PipelineInfra-CI.yml para la creación del archivo de estado de Terraform en una cuenta de almacenamiento. 
 
@@ -80,11 +80,12 @@ Esta conexión será utilizada por el pipeline llamado PipelineInfra-CI.yml para
 
 ![Image](https://github.com/hevaldes/AzDO/blob/main/assets/ARM.PNG "Azure Resource Manager")
 
-#### Creación de Pipeline Terraform
 
-Los pipelines del repositorio servirán para generar los pipelines requeridos. Realizar el siguiente proceso tanto para el Pipeline de Infaestructura como el de la contenerización de la aplicación. Serán 2 pipelines a generar. 
+#### 3. Creación de Pipeline Terraform
 
-1. Crear el  pipeline basado en el ya existente en el repositorio. 
+El pipeline existente en el repositorio servirá para generar el pipelines requerido. 
+
+1. Crear el pipeline basado en el ya existente en el repositorio. 
 2. Clic en Pipelines --> New Pipeline --> Seleccionar "Azure Repos Git YAML"
 
 ![Image](https://github.com/hevaldes/AzDO/blob/main/assets/GitRepo.PNG "Azure Repo - Git")
@@ -106,4 +107,30 @@ Los pipelines del repositorio servirán para generar los pipelines requeridos. R
 ![Image](https://github.com/hevaldes/AzDO/blob/main/assets/variables.PNG "Variables")
 
 
+#### 4. Creación de Service Connection para AKS y ACR
 
+Una vez ejecutado el pipeline de Infraestructura, seguir los pasos descritos en la sección "2. Creación de Service Connection para Microsoft Azure" para crear las conexiones al clúster de AKS y el ACR. Estas 2 conexiones serám utilizadas los siguientes pipelines. (CI/CD)
+
+
+#### 5. Creación Pileline de CI
+
+En este caso tenemos una aplicación .NET para lo cual se creará un pieline de CI de tipo Classic. Puede ser también de tipo YAML. Este pipeline contendrá: 
+
+1. Tarea de Copy Files para obtener el manifiesto de Kubernetes y dejarlo como artefacto en la fase de Release
+2. Hacer el Build and Push del código demo al ACR
+
+Creacíó del Pipeline: 
+
+1. Crear nuevo Pipeline de tipo Classic. 
+2. Template a seleccionar: ASP.NET Core
+3. Una vez creado el Pipeline, dejar solo las siguientes tareas.
+
+![Image](https://github.com/hevaldes/AzDO/blob/main/assets/PipelineCI.PNG "Pipeline CI")
+
+4. Donde la tarea "BuildandPush" tiene las siguientes configuraciones. En donde dice Container Repository establecer namespace/demoappnet donde namespace puede ser el nombre de la compañia, proyecto, etc. Ej: miempresa/demoappnet. Es importante recordar este dato ya que será utilizado en la fase de release. 
+
+![Image](https://github.com/hevaldes/AzDO/blob/main/assets/BuildandPush.PNG "Build and Push")
+
+5. La tarea "Copy Files" copiará del repositorio el manifiesto para AKS
+
+![Image](https://github.com/hevaldes/AzDO/blob/main/assets/Manifiesto.PNG "Manifiesto K8s")
