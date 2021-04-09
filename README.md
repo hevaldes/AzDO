@@ -12,7 +12,7 @@ ___
 ```
 ssh-keygen -m PEM -t rsa -b 4096 -C "sntdruser@demopoc" -f aks-terraform-devops-sshkey
 ```
-![Image](https://github.com/hevaldes/AzDO/blob/main/assets/ssh.PNG "SSH Key")
+![Image](https://github.com/hevaldes/AzDO/blob/main/assets/ssh.png "SSH Key")
 
 ___
 
