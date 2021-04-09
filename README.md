@@ -35,11 +35,10 @@ Los archivos en el repositorio son los necesarios para iniciar con la prueba de 
 | [DemoAppNET](https://github.com/hevaldes/AzDO/tree/main/DemoAppNET)  | Aplicación .NET Core con DockerFile para contenerizar |
 
 
-### Pipelies
+### Pipelines
 
 | Archivo  | Descripción |
 | ----------------- | ----------------- |
-| [PipelineApp-CI.yml](https://github.com/hevaldes/AzDO/blob/main/PipelineApp-CI.yml)  | Pipeline para creación de infraestructura Terraform |
 | [PipelineInfra-CI.yml](https://github.com/hevaldes/AzDO/blob/main/PipelineApp-CI.yml)  | Pipeline para contenerización y despliegue de imágen en ACR |
 
 ## Orden de implementación de la prueba de concepto
@@ -50,11 +49,31 @@ Los archivos en el repositorio son los necesarios para iniciar con la prueba de 
 2. Tener una cuenta Azure DevOps con un proyecto creado. Agile/Git
 3. Contar con el todo el repositorio restaurado en Azure Repositories dentro de Azure DevOps o bien en GitHub conectado a Azure Pipelines
 
-### Creación de Pipelines
+### Creación de Service Connection para Microsoft Azure
 
-Los pipelines del repositorio servirán para generar los pipelines requeridos. 
+Esta conexión será utilizada por el pipeline llamado PipelineInfra-CI.yml para la creación del archivo de estado de Terraform en una cuenta de almacenamiento. 
 
-1. Crear los pipelines basados en los ya existentes en el repositorio. 
+1. En Azure DevOps ir a Project Settings
+
+![Image](https://github.com/hevaldes/AzDO/blob/main/assets/ProjectSettings.PNG "Project Settings")
+
+2. En la sección de Pipelines, seleccionar Service Connections
+
+![Image](https://github.com/hevaldes/AzDO/blob/main/assets/ServiceConnections.PNG "Service Connections")
+
+3. Clic en New Service Connection
+
+![Image](https://github.com/hevaldes/AzDO/blob/main/assets/NewServiceConnection.PNG "New Service Connection")
+
+4. Seleccionar Azure Resource Manager y seguir con los pasos para conectar Azure DevOps con el portal de Microsoft Azure. Al nombrar esta conexión, podrá ser utilizada en la siguiente sección al configurar el pipeline de Infraestructura. 
+
+![Image](https://github.com/hevaldes/AzDO/blob/main/assets/ARM.PNG "Azure Resource Manager")
+
+### Creación de Pipeline Terraform
+
+Los pipelines del repositorio servirán para generar los pipelines requeridos. Realizar el siguiente proceso tanto para el Pipeline de Infaestructura como el de la contenerización de la aplicación. Serán 2 pipelines a generar. 
+
+1. Crear el  pipeline basado en el ya existente en el repositorio. 
 2. Clic en Pipelines --> New Pipeline --> Seleccionar "Azure Repos Git YAML"
 
 ![Image](https://github.com/hevaldes/AzDO/blob/main/assets/GitRepo.PNG "Azure Repo - Git")
@@ -67,5 +86,11 @@ Los pipelines del repositorio servirán para generar los pipelines requeridos.
 
 ![Image](https://github.com/hevaldes/AzDO/blob/main/assets/ExistingYAML.PNG "Select Existing YAML")
 
+5. Seleccionar el Pipeline y clic en Continue
 
-5. Seleccionar el Pipeline 
+6. Adecuar el pipeline en donde dice: "[SERVICE_CONNECTION_AZURE]" en la sección de variables.
+
+![Image](https://github.com/hevaldes/AzDO/blob/main/assets/Variables.PNG "Variables")
+
+
+

@@ -12,6 +12,7 @@ pool:
 variables:
   terraformstoragerg: 'terraformrg'
   terraformstorageaccount: 'terraformstoragea41992fd'
+  azureServiceConnection: '[SERVICE_CONNECTION_AZURE]'
 
 steps:
 - task: CopyFiles@2
@@ -23,7 +24,7 @@ steps:
 
 - task: AzureCLI@2
   inputs:
-    azureSubscription: 'MSFT Internal(c604c253-0002-413b-9540-8fd176c4d821)'
+    azureSubscription: '$(azureServiceConnection)'
     scriptLocation: 'inlineScript'
     scriptType: bash
     inlineScript: |
@@ -34,7 +35,7 @@ steps:
 
 - task: AzurePowerShell@5
   inputs:
-    azureSubscription: 'MSFT Internal(c604c253-0002-413b-9540-8fd176c4d821)'
+    azureSubscription: '$(azureServiceConnection)'
     ScriptType: 'InlineScript'
     Inline: |
           # Using this script we will fetch storage key which is required in terraform file to authenticate backend storage account
@@ -58,7 +59,7 @@ steps:
   displayName: 'Terraform : init'
   inputs:
     workingDirectory: '$(build.artifactstagingdirectory)'
-    backendServiceArm: 'MSFT Internal(c604c253-0002-413b-9540-8fd176c4d821)'
+    backendServiceArm: '$(azureServiceConnection)'
     backendAzureRmResourceGroupName: '$(terraformstoragerg)'
     backendAzureRmStorageAccountName: '$(terraformstorageaccount)'
     backendAzureRmContainerName: terraform
@@ -69,7 +70,7 @@ steps:
   inputs:
     command: plan
     workingDirectory: '$(build.artifactstagingdirectory)'
-    environmentServiceNameAzureRM: 'MSFT Internal(c604c253-0002-413b-9540-8fd176c4d821)'
+    environmentServiceNameAzureRM: '$(azureServiceConnection)'
     backendAzureRmResourceGroupName: '$(terraformstoragerg)'
     backendAzureRmStorageAccountName: '$(terraformstorageaccount)'
     backendAzureRmContainerName: terraform
@@ -81,7 +82,7 @@ steps:
     command: apply
     workingDirectory: '$(build.artifactstagingdirectory)'
     commandOptions: '-auto-approve'
-    environmentServiceNameAzureRM: 'MSFT Internal(c604c253-0002-413b-9540-8fd176c4d821)'
+    environmentServiceNameAzureRM: '$(azureServiceConnection)'
     backendAzureRmResourceGroupName: '$(terraformstoragerg)'
     backendAzureRmStorageAccountName: '$(terraformstorageaccount)'
     backendAzureRmContainerName: terraform
