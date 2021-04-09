@@ -90,7 +90,7 @@ Los pipelines del repositorio servirán para generar los pipelines requeridos. R
 
 6. Adecuar el pipeline en donde dice: "[SERVICE_CONNECTION_AZURE]" en la sección de variables.
 
-![Image](https://github.com/hevaldes/AzDO/blob/main/assets/Variables.PNG "Variables")
+![Image](https://github.com/hevaldes/AzDO/blob/main/assets/variables.PNG "Variables")
 
 
 
