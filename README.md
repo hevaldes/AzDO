@@ -16,7 +16,7 @@ ssh-keygen -m PEM -t rsa -b 4096 -C "sntdruser@demopoc" -f aks-terraform-devops-
 
 6. Se necesitará agregar del [Marketplace](https://marketplace.visualstudio.com/azuredevops?utm_source=vstsproduct&utm_medium=L1BrowseMarketplace&targetId=8bc5a556-3b10-4268-8754-c1fc189ef7b4) la extensión de [Terraform - Microsoft DevLabss](https://marketplace.visualstudio.com/azuredevops?utm_source=vstsproduct&utm_medium=L1BrowseMarketplace&targetId=8bc5a556-3b10-4268-8754-c1fc189ef7b4)
 
-![Image](https://github.com/hevaldes/AzDO/blob/main/assets/TerraformExtension.png "Terraform Microsoft Extension")
+![Image](https://github.com/hevaldes/AzDO/blob/main/assets/TerraformExtension.PNG "Terraform Microsoft Extension")
 ___
 
 ## Estructura del Repositorio
