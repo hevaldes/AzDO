@@ -39,8 +39,8 @@ Los archivos en el repositorio son los necesarios para iniciar con la prueba de 
 
 | Archivo  | Descripción |
 | ----------------- | ----------------- |
-| [SantanderApp-CI.yml](https://github.com/hevaldes/AzDO/blob/main/SantanderApp-CI.yml)  | Pipeline para creación de infraestructura Terraform |
-| [SantanderInfra-CI.yml](https://github.com/hevaldes/AzDO/blob/main/SantanderApp-CI.yml)  | Pipeline para contenerización y despliegue de imágen en ACR |
+| [PipelineApp-CI.yml](https://github.com/hevaldes/AzDO/blob/main/PipelineApp-CI.yml)  | Pipeline para creación de infraestructura Terraform |
+| [PipelineInfra-CI.yml](https://github.com/hevaldes/AzDO/blob/main/PipelineApp-CI.yml)  | Pipeline para contenerización y despliegue de imágen en ACR |
 
 ## Orden de implementación de la prueba de concepto
 
@@ -59,7 +59,13 @@ Los pipelines del repositorio servirán para generar los pipelines requeridos.
 
 ![Image](https://github.com/hevaldes/AzDO/blob/main/assets/GitRepo.PNG "Azure Repo - Git")
 
+3. Seleccionar el Repositorio. Puede ser Azure Repos o bien GitHub
+
+![Image](https://github.com/hevaldes/AzDO/blob/main/assets/SelectRepo.PNG "Select Azure Repo")
+
+4. Seleccionar "Existing Azure Pipeline YAML File"
+
+![Image](https://github.com/hevaldes/AzDO/blob/main/assets/ExistingYAML.PNG "Select Existing YAML")
 
 
-
-
+5. Seleccionar el Pipeline 
