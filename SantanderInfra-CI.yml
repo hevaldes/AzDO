@@ -21,13 +21,6 @@ steps:
     Contents: '**'
     TargetFolder: '$(build.artifactstagingdirectory)'
 
-- task: CopyFiles@2
-  displayName: Copy Kubernetes Manifest
-  inputs:
-    SourceFolder: 'K8s manifest'
-    Contents: '**'
-    TargetFolder: '$(build.artifactstagingdirectory)'
-
 - task: AzureCLI@2
   inputs:
     azureSubscription: 'MSFT Internal(c604c253-0002-413b-9540-8fd176c4d821)'
