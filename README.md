@@ -57,7 +57,7 @@ Los pipelines del repositorio servirán para generar los pipelines requeridos.
 1. Crear los pipelines basados en los ya existentes en el repositorio. 
 2. Clic en Pipelines --> New Pipeline --> Seleccionar "Azure Repos Git YAML"
 
-[![Image](https://github.com/hevaldes/AzDO/blob/main/assets/GitRepo.PNG "Azure Repo - Git")]
+![Image](https://github.com/hevaldes/AzDO/blob/main/assets/GitRepo.PNG "Azure Repo - Git")
 
 
 
