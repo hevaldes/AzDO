@@ -14,6 +14,9 @@ ssh-keygen -m PEM -t rsa -b 4096 -C "sntdruser@demopoc" -f aks-terraform-devops-
 ```
 ![Image](https://github.com/hevaldes/AzDO/blob/main/assets/ssh.png "SSH Key")
 
+6. Se necesitará agregar del [Marketplace](https://marketplace.visualstudio.com/azuredevops?utm_source=vstsproduct&utm_medium=L1BrowseMarketplace&targetId=8bc5a556-3b10-4268-8754-c1fc189ef7b4) la extensión de [Terraform - Microsoft DevLabss](https://marketplace.visualstudio.com/azuredevops?utm_source=vstsproduct&utm_medium=L1BrowseMarketplace&targetId=8bc5a556-3b10-4268-8754-c1fc189ef7b4)
+
+![Image](https://github.com/hevaldes/AzDO/blob/main/assets/TerraformExtension.png "Terraform Microsoft Extension")
 ___
 
 ## Estructura del Repositorio
@@ -106,6 +109,7 @@ El pipeline existente en el repositorio servirá para generar el pipelines reque
 
 ![Image](https://github.com/hevaldes/AzDO/blob/main/assets/variables.PNG "Variables")
 
+7. Ejecutar y validar resultados
 
 #### 4. Creación de Service Connection para AKS y ACR
 
@@ -134,3 +138,9 @@ Creacíó del Pipeline:
 5. La tarea "Copy Files" copiará del repositorio el manifiesto para AKS
 
 ![Image](https://github.com/hevaldes/AzDO/blob/main/assets/Manifiesto.PNG "Manifiesto K8s")
+
+6. Ejecutar y validar resultados
+
+#### 5. Creación Pileline de CD
+
+En la sección
