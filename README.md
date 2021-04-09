@@ -49,7 +49,7 @@ Los archivos en el repositorio son los necesarios para iniciar con la prueba de 
 2. Tener una cuenta Azure DevOps con un proyecto creado. Agile/Git
 3. Contar con el todo el repositorio restaurado en Azure Repositories dentro de Azure DevOps o bien en GitHub conectado a Azure Pipelines
 
-### Creación de Service Connection para Microsoft Azure
+#### Creación de Service Connection para Microsoft Azure
 
 Esta conexión será utilizada por el pipeline llamado PipelineInfra-CI.yml para la creación del archivo de estado de Terraform en una cuenta de almacenamiento. 
 
@@ -69,7 +69,7 @@ Esta conexión será utilizada por el pipeline llamado PipelineInfra-CI.yml para
 
 ![Image](https://github.com/hevaldes/AzDO/blob/main/assets/ARM.PNG "Azure Resource Manager")
 
-### Creación de Pipeline Terraform
+#### Creación de Pipeline Terraform
 
 Los pipelines del repositorio servirán para generar los pipelines requeridos. Realizar el siguiente proceso tanto para el Pipeline de Infaestructura como el de la contenerización de la aplicación. Serán 2 pipelines a generar. 
 
