@@ -143,4 +143,35 @@ Creacíó del Pipeline:
 
 #### 5. Creación Pileline de CD
 
-En la sección
+1. En la sección de Relase, generar un nuevo Pipeilne de Release. 
+2. Seleccionar "Empty Job"
+
+![Image](https://github.com/hevaldes/AzDO/blob/main/assets/EmptyJob.png "Empty Job")
+
+3. Opcionalmente dar un nombre al Stage
+4. Agregar un nuevo artefacto y seleccionar el pipelie que conteneriza la aplicación demo
+5. En el Stage a implementar, agregar 2 tareas de tipo "Deploy to Kubernetes" y nombrarlas como menciona la imágen
+
+![Image](https://github.com/hevaldes/AzDO/blob/main/assets/K8sTasks.PNG "K8s Tasks")
+
+6. Configurar la tarea "Create Secret to allow image pull from ACR" como sigue
+
+![Image](https://github.com/hevaldes/AzDO/blob/main/assets/K8sCreateSecret.PNG "Create Secret AKS")
+
+7. Configurar la tarea "Deploy to AKS" como sigue
+
+![Image](https://github.com/hevaldes/AzDO/blob/main/assets/DeployTasks.png "Deploy AKS")
+
+En esta tarea, asignar correctamente la propiedad Container, donde respecto a la imágen: [ACR_URL]/[namespace]/demoappnet:$(Build.BuildId)
+
+ACR_URL: Url del Azure Container Registry. Ej: miregistry.azurecr.io
+namespace: Se refiere al asignado en la sección "5. Creación Pileline de CI" punto "#4"
+
+8. Ejecutar
+
+___
+
+
+
+
+
