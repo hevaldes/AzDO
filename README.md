@@ -88,6 +88,8 @@ Los pipelines del repositorio servirán para generar los pipelines requeridos. R
 
 5. Seleccionar el Pipeline y clic en Continue
 
+![Image](https://github.com/hevaldes/AzDO/blob/main/assets/ExistingPipeline.PNG "Existing Pipeline YAML")
+
 6. Adecuar el pipeline en donde dice: "[SERVICE_CONNECTION_AZURE]" en la sección de variables.
 
 ![Image](https://github.com/hevaldes/AzDO/blob/main/assets/variables.PNG "Variables")
