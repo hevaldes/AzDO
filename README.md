@@ -43,7 +43,7 @@ Los archivos en el repositorio son los necesarios para iniciar con la prueba de 
 
 ## Orden de implementación de la prueba de concepto
 
-## Configuraciones en Azure DevOps
+#### Configuraciones en Azure DevOps
 
 1. Tener acceso a una suscripción Microsoft Azure para la creación de los recursos
 2. Tener una cuenta Azure DevOps con un proyecto creado. Agile/Git
