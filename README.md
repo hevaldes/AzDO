@@ -50,7 +50,16 @@ Los archivos en el repositorio son los necesarios para iniciar con la prueba de 
 2. Tener una cuenta Azure DevOps con un proyecto creado. Agile/Git
 3. Contar con el todo el repositorio restaurado en Azure Repositories dentro de Azure DevOps o bien en GitHub conectado a Azure Pipelines
 
-[![Image](https://.png "AWS EKS Kubernetes - Masterclass")]
+### Creación de Pipelines
+
+Los pipelines del repositorio servirán para generar los pipelines requeridos. 
+
+1. Crear los pipelines basados en los ya existentes en el repositorio. 
+2. Clic en Pipelines --> New Pipeline --> Seleccionar "Azure Repos Git YAML"
+
+[![Image](https://github.com/hevaldes/AzDO/blob/main/assets/GitRepo.png "Azure Repo - Git")]
 
 
-4. 
+
+
+
