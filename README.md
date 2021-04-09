@@ -121,10 +121,10 @@ Una vez ejecutado el pipeline de Infraestructura, seguir los pasos descritos en 
 
 En este caso tenemos una aplicación .NET para lo cual se creará un pieline de CI de tipo Classic. Puede ser también de tipo YAML. Este pipeline contendrá: 
 
-1. Tarea de Copy Files para obtener el manifiesto de Kubernetes y dejarlo como artefacto en la fase de Release
-2. Hacer el Build and Push del código demo al ACR
+* Tarea de Copy Files para obtener el manifiesto de Kubernetes y dejarlo como artefacto en la fase de Release
+* Hacer el Build and Push del código demo al ACR
 
-Creacíó del Pipeline: 
+Creacíón del Pipeline: 
 
 1. Crear nuevo Pipeline de tipo Classic. 
 2. Template a seleccionar: ASP.NET Core
