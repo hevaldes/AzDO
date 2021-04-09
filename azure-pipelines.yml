@@ -1,0 +1,95 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- none
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  terraformstoragerg: 'terraformrg'
+  terraformstorageaccount: 'terraformstoragea41992fd'
+
+steps:
+- task: CopyFiles@2
+  displayName: Copy Terraform Files
+  inputs:
+    SourceFolder: 'Terraform-manifests'
+    Contents: '**'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+
+- task: CopyFiles@2
+  displayName: Copy Kubernetes Manifest
+  inputs:
+    SourceFolder: 'K8s manifest'
+    Contents: '**'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'MSFT Internal(c604c253-0002-413b-9540-8fd176c4d821)'
+    scriptLocation: 'inlineScript'
+    scriptType: bash
+    inlineScript: |
+      az group create --location westus --name $(terraformstoragerg)
+          az storage account create --name $(terraformstorageaccount) --resource-group $(terraformstoragerg) --location westus --sku Standard_LRS
+          az storage container create --name terraform --account-name $(terraformstorageaccount)
+          az storage account keys list -g $(terraformstoragerg) -n $(terraformstorageaccount)
+
+- task: AzurePowerShell@5
+  inputs:
+    azureSubscription: 'MSFT Internal(c604c253-0002-413b-9540-8fd176c4d821)'
+    ScriptType: 'InlineScript'
+    Inline: |
+          # Using this script we will fetch storage key which is required in terraform file to authenticate backend storage account
+          $key='aks-terraform-devops-sshkey.pub'
+          Write-Host "##vso[task.setvariable variable=storagekey]$key"
+    azurePowerShellVersion: 'LatestVersion'
+
+- task: qetza.replacetokens.replacetokens-task.replacetokens@3
+  displayName: 'Replace tokens in terraform file'
+  inputs:
+    targetFiles: '$(build.artifactstagingdirectory)/**/*.tf'
+    escapeType: none
+    tokenPrefix: '__'
+    tokenSuffix: '__'
+
+- task: TerraformInstaller@0
+  inputs:
+    terraformVersion: '0.14.9'
+
+- task: TerraformTaskV1@0
+  displayName: 'Terraform : init'
+  inputs:
+    workingDirectory: '$(build.artifactstagingdirectory)'
+    backendServiceArm: 'MSFT Internal(c604c253-0002-413b-9540-8fd176c4d821)'
+    backendAzureRmResourceGroupName: '$(terraformstoragerg)'
+    backendAzureRmStorageAccountName: '$(terraformstorageaccount)'
+    backendAzureRmContainerName: terraform
+    backendAzureRmKey: terraform.tfstate
+
+- task: TerraformTaskV1@0
+  displayName: 'Terraform : plan'
+  inputs:
+    command: plan
+    workingDirectory: '$(build.artifactstagingdirectory)'
+    environmentServiceNameAzureRM: 'MSFT Internal(c604c253-0002-413b-9540-8fd176c4d821)'
+    backendAzureRmResourceGroupName: '$(terraformstoragerg)'
+    backendAzureRmStorageAccountName: '$(terraformstorageaccount)'
+    backendAzureRmContainerName: terraform
+    backendAzureRmKey: '$(key)'
+
+- task: TerraformTaskV1@0
+  displayName: 'Terraform : apply -auto-approve'
+  inputs:
+    command: apply
+    workingDirectory: '$(build.artifactstagingdirectory)'
+    commandOptions: '-auto-approve'
+    environmentServiceNameAzureRM: 'MSFT Internal(c604c253-0002-413b-9540-8fd176c4d821)'
+    backendAzureRmResourceGroupName: '$(terraformstoragerg)'
+    backendAzureRmStorageAccountName: '$(terraformstorageaccount)'
+    backendAzureRmContainerName: terraform
+    backendAzureRmKey: '$(key)'
