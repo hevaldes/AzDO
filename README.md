@@ -1,17 +1,17 @@
-# Entrenamiento Azure DevOps
+# Entrenamiento Microsoft Azure DevOps
 ___
 
 ## Generales
 
-1. El objetivo de la prueba de concepto es crear un clúster de Azure Kubernetes Service y un Azure Container Registry. Ambos con Terraform mediante un pipeline de CI.
+1. El objetivo de la prueba de concepto es crear un clúster de Azure Kubernetes Service y un Azure Container Registry. Ambos con Terraform mediante un Pipeline de CI.
 2. Una vez creada la infraestructura, se necesitan generar un par de Service Connection en Azure DevOps para conectar con el AKS, el ACR y el portal de Microsoft Azure.
 3. Se necesita la creación de un Pipeline de CI para la contenerización de la aplicación .NET de ejemplo y la generación de los artefactos.
-4. Finalmente, un pipeline de Release para desplegar la aplicación en el AKS.
+4. Finalmente, un Pipeline de Release para desplegar la aplicación en el AKS.
 5. Los pre requsitos son: Suscripción Microsoft Azure, Cuenta Azure DevOps con un proyecto creado (Git).
-6. El repositorio aqui en GitHub ya tiene la llave .pub de seguridad agregada y que se necesita para la creación del clúster de AKS. Sin embargo a continuación se describe como generarla. 
+6. El repositorio aqui en GitHub ya tiene la llave ".pub" de seguridad agregada y que se necesita para la creación del clúster de AKS. A continuación, se describe como generarla. 
 
 ```
-ssh-keygen -m PEM -t rsa -b 4096 -C "sntdruser@demopoc" -f aks-terraform-devops-sshkey
+ssh-keygen -m PEM -t rsa -b 4096 -C "user@demopoc" -f aks-terraform-devops-sshkey
 ```
 ![Image](https://github.com/hevaldes/AzDO/blob/main/assets/ssh.png "SSH Key")
 
@@ -66,7 +66,7 @@ ___
 
 #### 2. Creación de Service Connection para Microsoft Azure
 
-Esta conexión será utilizada por el pipeline llamado PipelineInfra-CI.yml para la creación del archivo de estado de Terraform en una cuenta de almacenamiento. 
+Esta conexión será utilizada por el Pipeline llamado PipelineInfra-CI.yml para la creación del archivo de estado de Terraform en una cuenta de almacenamiento. 
 
 1. En Azure DevOps ir a Project Settings
 
@@ -80,21 +80,21 @@ Esta conexión será utilizada por el pipeline llamado PipelineInfra-CI.yml para
 
 ![Image](https://github.com/hevaldes/AzDO/blob/main/assets/NewServiceConnection.PNG "New Service Connection")
 
-4. Seleccionar Azure Resource Manager y seguir con los pasos para conectar Azure DevOps con el portal de Microsoft Azure. Al nombrar esta conexión, podrá ser utilizada en la siguiente sección al configurar el pipeline de Infraestructura. 
+4. Seleccionar Azure Resource Manager y seguir con los pasos para conectar Azure DevOps con el portal de Microsoft Azure. Al nombrar esta conexión, podrá ser utilizada en la siguiente sección al configurar el Pipeline de Infraestructura. 
 
 ![Image](https://github.com/hevaldes/AzDO/blob/main/assets/ARM.PNG "Azure Resource Manager")
 
 
 #### 3. Creación de Pipeline Terraform
 
-El pipeline existente en el repositorio servirá para generar el pipelines requerido. 
+El Pipeline existente en el repositorio servirá para generar el Pipeline requerido. 
 
-1. Crear el pipeline basado en el ya existente en el repositorio. 
+1. Crear el Pipeline basado en el ya existente en el repositorio. 
 2. Clic en Pipelines --> New Pipeline --> Seleccionar "Azure Repos Git YAML"
 
 ![Image](https://github.com/hevaldes/AzDO/blob/main/assets/GitRepo.PNG "Azure Repo - Git")
 
-3. Seleccionar el Repositorio. Puede ser Azure Repos o bien GitHub
+3. Seleccionar el Repositorio. Puede ser Azure Repos o bien GitHub, dependiendo del que se esté utilizando.
 
 ![Image](https://github.com/hevaldes/AzDO/blob/main/assets/SelectRepo.PNG "Select Azure Repo")
 
@@ -106,7 +106,7 @@ El pipeline existente en el repositorio servirá para generar el pipelines reque
 
 ![Image](https://github.com/hevaldes/AzDO/blob/main/assets/ExistingPipeline.PNG "Existing Pipeline YAML")
 
-6. Adecuar el pipeline en donde dice: "[SERVICE_CONNECTION_AZURE]" en la sección de variables.
+6. Adecuar el Pipeline en donde dice: "[SERVICE_CONNECTION_AZURE]" en la sección de variables.
 
 ![Image](https://github.com/hevaldes/AzDO/blob/main/assets/variables.PNG "Variables")
 
@@ -114,12 +114,12 @@ El pipeline existente en el repositorio servirá para generar el pipelines reque
 
 #### 4. Creación de Service Connection para AKS y ACR
 
-Una vez ejecutado el pipeline de Infraestructura, seguir los pasos descritos en la sección "2. Creación de Service Connection para Microsoft Azure" para crear las conexiones al clúster de AKS y el ACR. Estas 2 conexiones serám utilizadas los siguientes pipelines. (CI/CD)
+Una vez ejecutado el Pipeline de Infraestructura, seguir los pasos descritos en la sección "2. Creación de Service Connection para Microsoft Azure" para crear las conexiones al clúster de AKS y el ACR. Estas 2 conexiones serán utilizadas los siguientes Pipelines. (CI/CD)
 
 
-#### 5. Creación Pileline de CI
+#### 5. Creación Pipeline de CI
 
-En este caso tenemos una aplicación .NET para lo cual se creará un pieline de CI de tipo Classic. Puede ser también de tipo YAML. Este pipeline contendrá: 
+En este caso tenemos una aplicación .NET para lo cual se creará un pieline de CI de tipo Classic. Puede ser también de tipo YAML. Este Pipeline contendrá: 
 
 * Tarea de Copy Files para obtener el manifiesto de Kubernetes y dejarlo como artefacto en la fase de Release
 * Hacer el Build and Push del código demo al ACR
@@ -142,15 +142,15 @@ Creacíón del Pipeline:
 
 6. Ejecutar y validar resultados
 
-#### 5. Creación Pileline de CD
+#### 5. Creación Pipeline de CD
 
-1. En la sección de Relase, generar un nuevo Pipeilne de Release. 
+1. En la sección de Release, generar un nuevo Pipeilne de Release. 
 2. Seleccionar "Empty Job"
 
 ![Image](https://github.com/hevaldes/AzDO/blob/main/assets/EmptyJob.png "Empty Job")
 
 3. Opcionalmente dar un nombre al Stage
-4. Agregar un nuevo artefacto y seleccionar el pipelie que conteneriza la aplicación demo
+4. Agregar un nuevo artefacto y seleccionar el Pipeline que conteneriza la aplicación demo
 5. En el Stage a implementar, agregar 2 tareas de tipo "Deploy to Kubernetes" y nombrarlas como menciona la imágen
 
 ![Image](https://github.com/hevaldes/AzDO/blob/main/assets/K8sTasks.PNG "K8s Tasks")
@@ -166,8 +166,8 @@ Creacíón del Pipeline:
 En esta tarea, asignar correctamente la propiedad Container, donde respecto a la imágen: [ACR_URL]/[namespace]/demoappnet:$(Build.BuildId)
 
 ```
-ACR_URL: Url del Azure Container Registry. Ej: miregistry.azurecr.io
-namespace: Se refiere al asignado en la sección "5. Creación Pileline de CI" punto "#4"
+ACR_URL: Url del Azure Container Registry. Ej: myregistry.azurecr.io
+namespace: Se refiere al asignado en la sección "5. Creación Pipeline de CI" punto "#4"
 ```
 
 8. Ejecutar
